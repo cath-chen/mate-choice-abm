@@ -1,14 +1,19 @@
 package mate_choice;
 
+import ec.util.MersenneTwisterFast;
 import mate_choice.Agent;
 import sim.util.Bag;
 import sim.util.Int2D;
+import sim.util.distribution.Normal;
 import spaces.Spaces;
 import sweep.SimStateSweep;
 
+
 public class Environment extends SimStateSweep {
-	int gridWidth = 50;
-	int gridHeight = 50;
+	int gridWidth = 100;
+	int gridHeight = 100;
+	int neighborhoodWidth = 10;
+	int neighborhoodHeight = 10;
 	int _maleS = 10;		// straight males
 	int _maleG = 10;		// gay males
 	int _maleB = 10;		// bi males
@@ -21,7 +26,8 @@ public class Environment extends SimStateSweep {
 	int movementSize = 1;
 	double p = 1; // probability that the agent is active
 	double preference_threshold = 0;
-	
+	double sd_a = 0.1; 	// width of distribution -- standard deviation for attractiveness
+	double sd_s = 0.3;	// width of distribution for similarity
 
 	
 	public Environment(long seed) {
@@ -39,17 +45,33 @@ public class Environment extends SimStateSweep {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void makeAgents() {
-		int total = _maleS + _maleG + _maleB + _femaleS + _femaleL + _femaleB;
-		int size = gridWidth * gridHeight;
-		if (total > size) {
-			System.out.println("too many agents :(");
-			return;
-		}
+	public void agentTraits(int num_of_agent) {
+		Normal normal_a = new Normal(0.6, sd_a, random);
+		Normal normal_s = new Normal(0.5, sd_s, random);
 		
-		for(int i = 0; i < _maleS; i++) {
+		double attractive_rate = 0.0;
+		double similar_rate = 0.0;
+		
+		for(int i = 0; i < num_of_agent; i++) {
 			int x = random.nextInt(gridWidth);
 			int y = random.nextInt(gridHeight);
+			
+			if (attract_similar) { 		// if attrative
+				attractive_rate = normal_a.nextDouble();
+				if (attractive_rate > 1.0) {
+					attractive_rate = 1.0;
+				} else if (attractive_rate < 0) {
+					attractive_rate = 0;
+				}
+			} else {
+				similar_rate = normal_s.nextDouble();
+				if (similar_rate > 1.0) {
+					similar_rate = 1.0;
+				} else if (similar_rate < 0) {
+					similar_rate = 0;
+				}
+			}
+			
 		
 			Bag b = sparseSpace.getObjectsAtLocation(x, y);
 			while (b != null) {
@@ -65,110 +87,45 @@ public class Environment extends SimStateSweep {
 			agent.colorBySexuality(agent.sexuality, this, agent);
 			schedule.scheduleRepeating(agent);
 			sparseSpace.setObjectLocation(agent, x, y);
-		}
-		
-		for(int i = 0; i < _maleG; i++) {
-			int x = random.nextInt(gridWidth);
-			int y = random.nextInt(gridHeight);
-		
-			Bag b = sparseSpace.getObjectsAtLocation(x, y);
-			while (b != null) {
-				y = random.nextInt(gridHeight);
-				x = random.nextInt(gridWidth);
-			}
-		
-			int xdir = random.nextInt(3) - 1;
-			int ydir = random.nextInt(3) - 1;
-			
-			Agent agent =  new Agent(attract_similar, Sexuality.GAY, preference_threshold, x, y, xdir ,ydir);
-			agent.colorBySexuality(agent.sexuality, this, agent);
-			schedule.scheduleRepeating(agent);
-			sparseSpace.setObjectLocation(agent, x, y);
-	
-		
-		}
-		
-		for(int i = 0; i < _maleB; i++) {
-			int x = random.nextInt(gridWidth);
-			int y = random.nextInt(gridHeight);
-		
-			Bag b = sparseSpace.getObjectsAtLocation(x, y);
-			while (b != null) {
-				y = random.nextInt(gridHeight);
-				x = random.nextInt(gridWidth);
-			}
-		
-			int xdir = random.nextInt(3) - 1;
-			int ydir = random.nextInt(3) - 1;
-			
-			Agent agent =  new Agent(attract_similar, Sexuality.BI_M, preference_threshold, x, y, xdir ,ydir);
-			 
-			agent.colorBySexuality(agent.sexuality, this, agent);
-			schedule.scheduleRepeating(agent);
-			sparseSpace.setObjectLocation(agent, x, y);
-		}
-		
-		for(int i = 0;i < _femaleS; i++) {
-			int x = random.nextInt(gridWidth);
-			int y = random.nextInt(gridHeight);
-		
-			Bag b = sparseSpace.getObjectsAtLocation(x, y);
-			while (b != null) {
-				y = random.nextInt(gridHeight);
-				x = random.nextInt(gridWidth);
-			}
-		
-			int xdir = random.nextInt(3) - 1;
-			int ydir = random.nextInt(3) - 1;
-			
-			Agent agent =  new Agent(attract_similar, Sexuality.STRAIGHT_F, preference_threshold, x, y, xdir ,ydir);
-			 
-			agent.colorBySexuality(agent.sexuality, this, agent);
-			schedule.scheduleRepeating(agent);
-			sparseSpace.setObjectLocation(agent, x, y);
-		}
-		
-		for(int i = 0; i < _femaleL; i++) {
-			int x = random.nextInt(gridWidth);
-			int y = random.nextInt(gridHeight);
-		
-			Bag b = sparseSpace.getObjectsAtLocation(x, y);
-			while (b != null) {
-				y = random.nextInt(gridHeight);
-				x = random.nextInt(gridWidth);
-			}
-		
-			int xdir = random.nextInt(3) - 1;
-			int ydir = random.nextInt(3) - 1;
-			
-			Agent agent =  new Agent(attract_similar, Sexuality.LESBIAN, preference_threshold, x, y, xdir ,ydir);
-			 
-			agent.colorBySexuality(agent.sexuality, this, agent);
-			schedule.scheduleRepeating(agent);
-			sparseSpace.setObjectLocation(agent, x, y);
-		}
-		
-		for(int i = 0; i < _femaleB; i++) {
-			int x = random.nextInt(gridWidth);
-			int y = random.nextInt(gridHeight);
-		
-			Bag b = sparseSpace.getObjectsAtLocation(x, y);
-			while (b != null) {
-				y = random.nextInt(gridHeight);
-				x = random.nextInt(gridWidth);
-			}
-		
-			int xdir = random.nextInt(3) - 1;
-			int ydir = random.nextInt(3) - 1;
-			
-			Agent agent =  new Agent(attract_similar, Sexuality.BI_F, preference_threshold, x, y, xdir ,ydir);
-			 
-			agent.colorBySexuality(agent.sexuality, this, agent);
-			schedule.scheduleRepeating(agent);
-			sparseSpace.setObjectLocation(agent, x, y);
+			setNeighborhoods(x, y);
 		}
 	}
 	
+	public void makeAgents() {
+		int total = _maleS + _maleG + _maleB + _femaleS + _femaleL + _femaleB;
+		int size = gridWidth * gridHeight;
+	
+		
+		if (total > size) {
+			System.out.println("too many agents :(");
+			return;
+		}
+		
+		agentTraits(_maleS);
+		agentTraits(_maleG);
+		agentTraits(_maleB);
+		agentTraits(_femaleS);
+		agentTraits(_femaleL);
+		agentTraits(_femaleB);
+	}
+	
+//	
+//	public void createNeighborhood() {
+//		int neighborhood_num = gridWidth / neighborhoodWidth;
+//		int assigned_neighborhood = 0;
+//		
+//		for (int i = 0; i < neighborhood_num; i++) {
+//			for (int j = 0; j < neighborhood_num; j++) {
+//				assigned_neighborhood = assigned_neighborhood + 1;
+//			}
+//		}
+//	}
+	
+	public void setNeighborhood(int x, int y) {
+		int x_neighborhood = x / neighborhoodHeight;
+		int y_neighborhood = y / neighborhoodWidth;
+		
+	}
 	
 	public void start() {
 		super.start();
@@ -176,6 +133,8 @@ public class Environment extends SimStateSweep {
 		make2DSpace(spaces, gridWidth, gridHeight); // make the space
 		makeAgents();
 	}
+	
+	
 	
 	
 	// Getters and setters

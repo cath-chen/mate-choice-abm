@@ -7,6 +7,7 @@ import java.util.Random;
 import sim.engine.SimState;
 import sim.engine.Steppable;
 import sim.util.Bag;
+import mate_choice.Environment;
 
 public class Agent implements Steppable {
 	int x;
@@ -33,8 +34,8 @@ public class Agent implements Steppable {
 	
 	public void move(Environment state) {
 		if(state.random.nextBoolean(state.getP())) {
-			xdir = state.random.nextInt(3)-1;
-			ydir = state.random.nextInt(3)-1;
+			xdir = (state.random.nextInt(3)-1) * state.getMovementSize();
+			ydir = (state.random.nextInt(3)-1) * state.getMovementSize();
 		}
 		placeAgent(state);
 	}

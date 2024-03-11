@@ -28,6 +28,7 @@ public class Environment extends SimStateSweep {
 	double preference_threshold = 0;
 	double sd_a = 0.1; 	// width of distribution -- standard deviation for attractiveness
 	double sd_s = 0.3;	// width of distribution for similarity
+	int mate_count = 0;  // counts number of removed pairs
 
 	
 	public Environment(long seed) {
@@ -72,6 +73,12 @@ public class Environment extends SimStateSweep {
 				}
 			}
 			
+			double rate;
+			if (attract_similar) {
+				rate = attractive_rate;
+			} else {
+				rate = similar_rate;
+			}
 		
 			Bag b = sparseSpace.getObjectsAtLocation(x, y);
 			while (b != null) {
@@ -82,7 +89,7 @@ public class Environment extends SimStateSweep {
 			int xdir = random.nextInt(3) - 1;
 			int ydir = random.nextInt(3) - 1;
 			
-			Agent agent =  new Agent(attract_similar, Sexuality.STRAIGHT_M, preference_threshold, x, y, xdir ,ydir);
+			Agent agent =  new Agent(attract_similar, rate, Sexuality.STRAIGHT_M, preference_threshold, x, y, xdir ,ydir);
 			 
 			agent.colorBySexuality(agent.sexuality, this, agent);
 			schedule.scheduleRepeating(agent);
@@ -240,6 +247,14 @@ public class Environment extends SimStateSweep {
 
 	public void set_femaleB(int _femaleB) {
 		this._femaleB = _femaleB;
+	}
+	
+	public int get_mateCount(int mate_count) {
+		return mate_count;
+	}
+	
+	public void setMateCount(int mate_count) {
+		this.mate_count = mate_count;
 	}
 
 }

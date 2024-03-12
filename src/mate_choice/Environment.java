@@ -29,6 +29,7 @@ public class Environment extends SimStateSweep {
 	double sd_a = 0.1; 	// width of distribution -- standard deviation for attractiveness
 	double sd_s = 0.3;	// width of distribution for similarity
 	int mate_count = 0;  // counts number of removed pairs
+	boolean charts = true;
 
 	
 	public Environment(long seed) {
@@ -46,7 +47,7 @@ public class Environment extends SimStateSweep {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void agentTraits(int num_of_agent) {
+	public void agentTraits(int num_of_agent, Sexuality sexuality) {
 		Normal normal_a = new Normal(0.6, sd_a, random);
 		Normal normal_s = new Normal(0.5, sd_s, random);
 		
@@ -89,12 +90,14 @@ public class Environment extends SimStateSweep {
 			int xdir = random.nextInt(3) - 1;
 			int ydir = random.nextInt(3) - 1;
 			
-			Agent agent =  new Agent(attract_similar, rate, Sexuality.STRAIGHT_M, preference_threshold, x, y, xdir ,ydir);
+			int[] neighborhood = createNeighborhood(x, y);
+			
+			Agent agent =  new Agent(attract_similar, rate, sexuality, preference_threshold, x, y, xdir ,ydir, neighborhood);
 			 
 			agent.colorBySexuality(agent.sexuality, this, agent);
 			schedule.scheduleRepeating(agent);
 			sparseSpace.setObjectLocation(agent, x, y);
-			setNeighborhoods(x, y);
+//			setNeighborhoods(x, y);
 		}
 	}
 	
@@ -108,37 +111,35 @@ public class Environment extends SimStateSweep {
 			return;
 		}
 		
-		agentTraits(_maleS);
-		agentTraits(_maleG);
-		agentTraits(_maleB);
-		agentTraits(_femaleS);
-		agentTraits(_femaleL);
-		agentTraits(_femaleB);
+		agentTraits(_maleS, Sexuality.STRAIGHT_M);
+		agentTraits(_maleG, Sexuality.GAY);
+		agentTraits(_maleB, Sexuality.BI_M);
+		agentTraits(_femaleS, Sexuality.STRAIGHT_F);
+		agentTraits(_femaleL, Sexuality.LESBIAN);
+		agentTraits(_femaleB, Sexuality.BI_F);
 	}
 	
-//	
-//	public void createNeighborhood() {
-//		int neighborhood_num = gridWidth / neighborhoodWidth;
-//		int assigned_neighborhood = 0;
-//		
-//		for (int i = 0; i < neighborhood_num; i++) {
-//			for (int j = 0; j < neighborhood_num; j++) {
-//				assigned_neighborhood = assigned_neighborhood + 1;
-//			}
-//		}
-//	}
-	
-	public void setNeighborhood(int x, int y) {
-		int x_neighborhood = x / neighborhoodHeight;
-		int y_neighborhood = y / neighborhoodWidth;
+	public int[] createNeighborhood(int x, int y) {
+
+		int neighborhoodWidthSize =  gridWidth / neighborhoodWidth;
+		int neighborhoodHeightSize =  gridHeight / neighborhoodHeight;
 		
+		int x_neighborhood = x / neighborhoodWidthSize;
+	    int y_neighborhood = y / neighborhoodHeightSize;
+
+	    int[] neighborhood = {x_neighborhood, y_neighborhood};
+	    
+		return neighborhood;
 	}
+	
 	
 	public void start() {
 		super.start();
 		spaces = Spaces.SPARSE;	// set the space
 		make2DSpace(spaces, gridWidth, gridHeight); // make the space
 		makeAgents();
+		if(observer != null)
+			observer.initialize(space, spaces);
 	}
 	
 	
@@ -255,6 +256,14 @@ public class Environment extends SimStateSweep {
 	
 	public void setMateCount(int mate_count) {
 		this.mate_count = mate_count;
+	}
+	
+	public boolean isCharts() {
+		return charts;
+	}
+
+	public void setCharts(boolean charts) {
+		this.charts = charts;
 	}
 
 }

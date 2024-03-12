@@ -16,11 +16,12 @@ public class Agent implements Steppable {
 	int ydir;
 	double a_rate; // attractive rate
 	double s_rate; // similarity rate
+	int[] hood;
 	double preference_threshold;
 	Sexuality sexuality;
 	
 	
-	public Agent(boolean attractive_rate, double rate, Sexuality sexuality, double preference_threshold, int x, int y, int xdir, int ydir) {
+	public Agent(boolean attractive_rate, double rate, Sexuality sexuality, double preference_threshold, int x, int y, int xdir, int ydir, int[] neighborhood) {
 		super();
 		if (attractive_rate) {
 			this.a_rate = rate;
@@ -33,6 +34,7 @@ public class Agent implements Steppable {
 		this.y = y;
 		this.xdir = xdir;
 		this.ydir = ydir;
+		this.hood = neighborhood;
 	}
 	
 	public void move(Environment state) {
@@ -47,8 +49,23 @@ public class Agent implements Steppable {
 	public void placeAgent(Environment state) {
 		x = state.sparseSpace.stx(x + xdir);
 		y = state.sparseSpace.stx(y + ydir);
+		areNeighbors(state);
 		state.sparseSpace.setObjectLocation(this, x, y);
 	}
+	
+	public void areNeighbors(Environment state) {
+		Bag neighbors;
+		neighbors = state.sparseSpace.getMooreNeighbors(x, y, state.getSearchRadius(), state.sparseSpace.TOROIDAL, false);
+//		System.out.println("inside are neighbors\n");
+		
+		for (int i = 0; i < neighbors.numObjs; i++) {
+			Agent a = (Agent)neighbors.objs[i];
+			if (hood == a.hood) {
+//				System.out.println("WE FROM THE SAME HOOD" + " " + hood.toString() + " " + a.hood.toString());
+			}
+		}
+	}
+	
 	
 	public void mateDecision(Environment state, Bag neighbors) {
 		Agent a = (Agent)neighbors.objs[0];
@@ -76,6 +93,7 @@ public class Agent implements Steppable {
 			preference = this.a_rate - 0.2;
 			if (a.a_rate > preference) {
 				//TODO: partner and leave mating pool
+				remove(state);
 			} else {
 				// lower threshold
 				preference -= 0.1;
@@ -87,6 +105,7 @@ public class Agent implements Steppable {
 			double s_range = Math.abs(this.s_rate - a.s_rate);
 			if (s_range < preference) {
 				//TODO: partner and leave mating pool
+				remove(state);
 			} else {
 				// increase threshold
 				preference += 0.1;
@@ -100,6 +119,7 @@ public class Agent implements Steppable {
 		state.sparseSpace.remove(this);
 		state.setMateCount(state.mate_count + 1);	// increment number of pairs removed from env 
 //		event.stop();
+		System.out.println("agent removed!!!!!\n");
 	}
 
 	@Override

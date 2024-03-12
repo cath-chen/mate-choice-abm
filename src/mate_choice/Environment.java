@@ -14,12 +14,7 @@ public class Environment extends SimStateSweep {
 	int gridHeight = 100;
 	int neighborhoodWidth = 10;
 	int neighborhoodHeight = 10;
-	int _maleS = 10;		// straight males
-	int _maleG = 10;		// gay males
-	int _maleB = 10;		// bi males
-	int _femaleS = 10;	// straight females
-	int _femaleL = 10;	// lesbian females
-	int _femaleB = 10;	// bi females
+	int total = 50;
 	int searchRadius = 5; // how many squares should agents search for neighbors
 	boolean attract_similar = true;   // false similar, true is attractive
 	boolean familiar = true;
@@ -95,14 +90,12 @@ public class Environment extends SimStateSweep {
 			Agent agent =  new Agent(attract_similar, rate, sexuality, preference_threshold, x, y, xdir ,ydir, neighborhood);
 			 
 			agent.colorBySexuality(agent.sexuality, this, agent);
-			schedule.scheduleRepeating(agent);
+			agent.event = schedule.scheduleRepeating(agent);
 			sparseSpace.setObjectLocation(agent, x, y);
-//			setNeighborhoods(x, y);
 		}
 	}
 	
 	public void makeAgents() {
-		int total = _maleS + _maleG + _maleB + _femaleS + _femaleL + _femaleB;
 		int size = gridWidth * gridHeight;
 	
 		
@@ -111,12 +104,18 @@ public class Environment extends SimStateSweep {
 			return;
 		}
 		
-		agentTraits(_maleS, Sexuality.STRAIGHT_M);
-		agentTraits(_maleG, Sexuality.GAY);
-		agentTraits(_maleB, Sexuality.BI_M);
-		agentTraits(_femaleS, Sexuality.STRAIGHT_F);
-		agentTraits(_femaleL, Sexuality.LESBIAN);
-		agentTraits(_femaleB, Sexuality.BI_F);
+		// straight males (blue)
+		agentTraits((int)(0.45 * total), Sexuality.STRAIGHT_M);
+		// gay males (cyan)
+		agentTraits((int)(0.02 * total), Sexuality.GAY);
+		// bi males (green)
+		agentTraits((int)(0.03 * total), Sexuality.BI_M);
+		// straight females (red)
+		agentTraits((int)(0.45 * total), Sexuality.STRAIGHT_F);
+		// lesbian females (magenta)
+		agentTraits((int)(0.02 * total), Sexuality.LESBIAN);
+		// bi females (yellow)
+		agentTraits((int)(0.03 * total), Sexuality.BI_F);
 	}
 	
 	public int[] createNeighborhood(int x, int y) {
@@ -202,54 +201,7 @@ public class Environment extends SimStateSweep {
 	public void setP(double p) {
 		this.p = p;
 	}
-	public int get_maleS() {
-		return _maleS;
-	}
 
-	public void set_maleS(int _maleS) {
-		this._maleS = _maleS;
-	}
-
-	public int get_maleG() {
-		return _maleG;
-	}
-
-	public void set_maleG(int _maleG) {
-		this._maleG = _maleG;
-	}
-
-	public int get_maleB() {
-		return _maleB;
-	}
-
-	public void set_maleB(int _maleB) {
-		this._maleB = _maleB;
-	}
-
-	public int get_femaleS() {
-		return _femaleS;
-	}
-
-	public void set_femaleS(int _femaleS) {
-		this._femaleS = _femaleS;
-	}
-
-	public int get_femaleL() {
-		return _femaleL;
-	}
-
-	public void set_femaleL(int _femaleL) {
-		this._femaleL = _femaleL;
-	}
-
-	public int get_femaleB() {
-		return _femaleB;
-	}
-
-	public void set_femaleB(int _femaleB) {
-		this._femaleB = _femaleB;
-	}
-	
 	public int get_mateCount(int mate_count) {
 		return mate_count;
 	}
@@ -267,3 +219,5 @@ public class Environment extends SimStateSweep {
 	}
 
 }
+	
+

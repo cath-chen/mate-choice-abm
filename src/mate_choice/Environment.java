@@ -20,8 +20,8 @@ public class Environment extends SimStateSweep {
 	int _femaleS = 10;	// straight females
 	int _femaleL = 10;	// lesbian females
 	int _femaleB = 10;	// bi females
-	int searchRadius = 1; // how many squares should agents search for neighbors
-	boolean attract_similar = false;   // false similar, true is attractive
+	int searchRadius = 5; // how many squares should agents search for neighbors
+	boolean attract_similar = true;   // false similar, true is attractive
 	boolean familiar = true;
 	int movementSize = 1;
 	double p = 1; // probability that the agent is active

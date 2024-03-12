@@ -56,19 +56,15 @@ public class Agent implements Steppable {
 	public void areNeighbors(Environment state) {
 		Bag neighbors;
 		neighbors = state.sparseSpace.getMooreNeighbors(x, y, state.getSearchRadius(), state.sparseSpace.TOROIDAL, false);
-//		System.out.println("inside are neighbors\n");
-		
-		for (int i = 0; i < neighbors.numObjs; i++) {
-			Agent a = (Agent)neighbors.objs[i];
-			if (hood == a.hood) {
-//				System.out.println("WE FROM THE SAME HOOD" + " " + hood.toString() + " " + a.hood.toString());
-			}
+		if (neighbors != null) {
+			mateDecision(state, neighbors);
 		}
 	}
 	
 	
 	public void mateDecision(Environment state, Bag neighbors) {
 		Agent a = (Agent)neighbors.objs[0];
+//		System.out.println("agent rating: " + a.a_rate);
 		
 		// if the curr agent is male
 		if (this.sexuality == Sexuality.GAY || this.sexuality == Sexuality.BI_M || this.sexuality == Sexuality.STRAIGHT_M) {

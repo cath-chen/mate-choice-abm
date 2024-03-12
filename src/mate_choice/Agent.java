@@ -8,22 +8,25 @@ import sim.engine.SimState;
 import sim.engine.Steppable;
 import sim.engine.Stoppable;
 import sim.util.Bag;
-import mating.Environment;
+import sim.util.Int2D;
+import mate_choice.Environment;
 
 public class Agent implements Steppable {
 	int x;
 	int y;
 	int xdir;
 	int ydir;
+	int id;//this is the agent's id
 	double a_rate; // attractive rate
 	double s_rate; // similarity rate
 	int[] hood;
 	double preference_threshold;
 	Sexuality sexuality;
 	public Stoppable event;
+	int move_count;
 	
 	
-	public Agent(boolean attractive_rate, double rate, Sexuality sexuality, double preference_threshold, int x, int y, int xdir, int ydir, int[] neighborhood) {
+	public Agent(int id, boolean attractive_rate, double rate, Sexuality sexuality, double preference_threshold, int x, int y, int xdir, int ydir, int[] neighborhood) {
 		super();
 		if (attractive_rate) {
 			this.a_rate = rate;
@@ -37,6 +40,7 @@ public class Agent implements Steppable {
 		this.xdir = xdir;
 		this.ydir = ydir;
 		this.hood = neighborhood;
+		this.move_count = 0;
 	}
 	
 	public void move(Environment state) {
@@ -45,6 +49,11 @@ public class Agent implements Steppable {
 			ydir = (state.random.nextInt(3)-1) * state.getMovementSize();
 		}
 		placeAgent(state);
+		move_count++;
+		if (move_count == 9) {
+			move_count = 0;
+			checkInteractions(state);
+		}
 	}
 	
 	
@@ -52,6 +61,7 @@ public class Agent implements Steppable {
 		x = state.sparseSpace.stx(x + xdir);
 		y = state.sparseSpace.stx(y + ydir);
 		state.sparseSpace.setObjectLocation(this, x, y);
+        hood = state.createNeighborhood(x, y);
 	}
 	
 	public void areNeighbors(Environment state) {
@@ -68,6 +78,7 @@ public class Agent implements Steppable {
 	
 	public void mateDecision(Environment state, Bag neighbors) {
 		Agent a = (Agent)neighbors.objs[0];
+		double preference;
 		
 		// if the curr agent is male
 		if (this.sexuality == Sexuality.GAY || this.sexuality == Sexuality.BI_M || this.sexuality == Sexuality.STRAIGHT_M) {
@@ -86,10 +97,16 @@ public class Agent implements Steppable {
 			}
 		}
 		
-		double preference;
+		
 		// if toggled on --> attractive
 		if (state.getAttract_similar()) {
 			preference = this.a_rate - 0.2;
+			if (state.getFamiliar()) {
+				// familiarity subtracts 0.5 from preference for each increase in score
+				double f_score = state.getInteractionCount(this.id, a.id)/20;
+				preference = preference - f_score;
+				
+			}
 			if (a.a_rate > preference) {
 				//TODO: partner and leave mating pool
 				remove_agents(state, a);
@@ -103,6 +120,11 @@ public class Agent implements Steppable {
 		} else {
 			preference = (state.random.nextInt(3) + 2)/10;
 			double s_range = Math.abs(this.s_rate - a.s_rate);
+			if (state.getFamiliar()) {
+				// familiarity adds 0.5 from preference range for each increase in score
+				double f_score = state.getInteractionCount(this.id, a.id)/20;
+				preference = preference + f_score;
+			}
 			if (s_range < preference) {
 				//TODO: partner and leave mating pool
 				remove_agents(state, a);
@@ -123,6 +145,26 @@ public class Agent implements Steppable {
 		event.stop();
 		a.event.stop();
 		state.setMateCount(state.mate_count + 1);	// increment number of pairs removed from env 
+	}
+	
+	public void checkInteractions(Environment state) {
+        
+        // Iterate over all agents again to find those in the same neighborhood
+        for (Object obj : state.allAgents) {
+            Agent otherAgent = (Agent) obj;
+            if (this == otherAgent) {
+            	continue;
+            }
+            Int2D otherLocation = state.sparseSpace.getObjectLocation(otherAgent);
+            int[] otherNeighborhood = state.createNeighborhood(otherLocation.getX(), otherLocation.getY());
+            
+            // Check if agents are in the same neighborhood
+            if (hood[0] == otherNeighborhood[0] && hood[1] == otherNeighborhood[1]) {
+                // Record interaction in the matrix
+//            	System.out.println("same neighborhood\n" + state.allAgents.size());
+                state.recordInteraction(this.id, otherAgent.id);
+            }
+        }
 	}
 
 	@Override

@@ -6,8 +6,9 @@ import ec.util.MersenneTwisterFast;
 import sim.engine.Schedule;
 import sim.engine.SimState;
 import sim.engine.Steppable;
+import sim.engine.Stoppable;
 import sim.util.Bag;
-import mate_choice.Environment;
+import mating.Environment;
 
 public class Agent implements Steppable {
 	int x;
@@ -19,6 +20,7 @@ public class Agent implements Steppable {
 	int[] hood;
 	double preference_threshold;
 	Sexuality sexuality;
+	public Stoppable event;
 	
 	
 	public Agent(boolean attractive_rate, double rate, Sexuality sexuality, double preference_threshold, int x, int y, int xdir, int ydir, int[] neighborhood) {
@@ -49,22 +51,23 @@ public class Agent implements Steppable {
 	public void placeAgent(Environment state) {
 		x = state.sparseSpace.stx(x + xdir);
 		y = state.sparseSpace.stx(y + ydir);
-		areNeighbors(state);
 		state.sparseSpace.setObjectLocation(this, x, y);
 	}
 	
 	public void areNeighbors(Environment state) {
 		Bag neighbors;
 		neighbors = state.sparseSpace.getMooreNeighbors(x, y, state.getSearchRadius(), state.sparseSpace.TOROIDAL, false);
-		if (neighbors != null) {
+		if (neighbors != null && !neighbors.isEmpty()) {
 			mateDecision(state, neighbors);
+		} else {
+			move(state);
+			return;
 		}
 	}
 	
 	
 	public void mateDecision(Environment state, Bag neighbors) {
 		Agent a = (Agent)neighbors.objs[0];
-//		System.out.println("agent rating: " + a.a_rate);
 		
 		// if the curr agent is male
 		if (this.sexuality == Sexuality.GAY || this.sexuality == Sexuality.BI_M || this.sexuality == Sexuality.STRAIGHT_M) {
@@ -89,7 +92,8 @@ public class Agent implements Steppable {
 			preference = this.a_rate - 0.2;
 			if (a.a_rate > preference) {
 				//TODO: partner and leave mating pool
-				remove(state);
+				remove_agents(state, a);
+				return;
 			} else {
 				// lower threshold
 				preference -= 0.1;
@@ -101,7 +105,8 @@ public class Agent implements Steppable {
 			double s_range = Math.abs(this.s_rate - a.s_rate);
 			if (s_range < preference) {
 				//TODO: partner and leave mating pool
-				remove(state);
+				remove_agents(state, a);
+				return;
 			} else {
 				// increase threshold
 				preference += 0.1;
@@ -111,41 +116,44 @@ public class Agent implements Steppable {
 		}
 	}
 	
-	public void remove(Environment state) {
+	public void remove_agents(Environment state, Agent a) {
 		state.sparseSpace.remove(this);
+		state.sparseSpace.remove(a);
+		System.out.println("removed\n");
+		event.stop();
+		a.event.stop();
 		state.setMateCount(state.mate_count + 1);	// increment number of pairs removed from env 
-//		event.stop();
-		System.out.println("agent removed!!!!!\n");
 	}
 
 	@Override
 	public void step(SimState state) {
 		Environment estate = (Environment)state;
 		move(estate);
+		areNeighbors(estate);
 	}
 	
 	public void colorBySexuality(Sexuality sexuality, Environment state, Agent a) {
 		switch (sexuality) {
-		case LESBIAN:
-			state.gui.setOvalPortrayal2DColor(a, (float)0, (float)0, (float)1, (float)1);
-			break;
-		case GAY:
-			state.gui.setOvalPortrayal2DColor(a, (float)1, (float)0, (float)0, (float)1);
-			break;
-		case STRAIGHT_M:
-			state.gui.setOvalPortrayal2DColor(a, (float)0.5, (float)0.5, (float)1, (float)1);
-			break;
-		case STRAIGHT_F:
+		case LESBIAN: // magenta
 			state.gui.setOvalPortrayal2DColor(a, (float)1, (float)0, (float)1, (float)1);
 			break;
-		case BI_M:
+		case GAY: // cyan
+			state.gui.setOvalPortrayal2DColor(a, (float)0, (float)1, (float)1, (float)1);
+			break;
+		case STRAIGHT_M: // blue
+			state.gui.setOvalPortrayal2DColor(a, (float)0, (float)0, (float)1, (float)1);
+			break;
+		case STRAIGHT_F: // red
+			state.gui.setOvalPortrayal2DColor(a, (float)1, (float)0, (float)0, (float)1);
+			break;
+		case BI_M: // green
+			state.gui.setOvalPortrayal2DColor(a, (float)0, (float)1, (float)0, (float)1);
+			break;
+		case BI_F: // yellow
 			state.gui.setOvalPortrayal2DColor(a, (float)1, (float)1, (float)0, (float)1);
 			break;
-		case BI_F:
-			state.gui.setOvalPortrayal2DColor(a, (float)1, (float)1, (float)1, (float)1);
-			break;
 		default:
-			state.gui.setOvalPortrayal2DColor(a, (float)1, (float)0, (float)0, (float)1);
+			state.gui.setOvalPortrayal2DColor(a, (float)1, (float)1, (float)1, (float)1);
 		}
 	}
 

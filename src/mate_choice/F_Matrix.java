@@ -15,14 +15,17 @@ public class F_Matrix {
 
     public void recordInteraction(int agent1, int agent2) {
         // Increment interaction count between agent1 and agent2
+    	// familiarity score caps at 6, or a change in value of 0.3
+    	if (this.matrix[agent1][agent2] == 6) {
+    		return;
+    	}
         this.matrix[agent1][agent2]++;
         // For undirected interactions, increment count in both directions
         this.matrix[agent2][agent1]++;
+    	System.out.println("recorded interaction\n");
     }
 
     public int getInteractionCount(int agent1, int agent2) {
         return this.matrix[agent1][agent2];
     }
-
-    // Other methods for querying and analyzing interactions
 }

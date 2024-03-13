@@ -66,7 +66,7 @@ public class Agent implements Steppable {
 	
 	public void areNeighbors(Environment state) {
 		Bag neighbors;
-		neighbors = state.sparseSpace.getMooreNeighbors(x, y, state.getSearchRadius(), state.sparseSpace.TOROIDAL, false);
+		neighbors = state.sparseSpace.getMooreNeighbors(x, y, state.getSearchRadius(), state.sparseSpace.BOUNDED, false);
 		if (neighbors != null && !neighbors.isEmpty()) {
 			mateDecision(state, neighbors);
 		} else {
@@ -141,7 +141,7 @@ public class Agent implements Steppable {
 	public void remove_agents(Environment state, Agent a) {
 		state.sparseSpace.remove(this);
 		state.sparseSpace.remove(a);
-		System.out.println("removed\n");
+//		System.out.println("removed\n");
 		event.stop();
 		a.event.stop();
 		state.setMateCount(state.mate_count + 1);	// increment number of pairs removed from env 

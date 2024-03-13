@@ -14,8 +14,7 @@ public class Environment extends SimStateSweep {
 	public static int id = 0;
 	int gridWidth = 100;
 	int gridHeight = 100;
-	int neighborhoodWidth = 10;
-	int neighborhoodHeight = 10;
+	int neighborhoodSize = 10;
 	int total = 50;
 	int searchRadius = 5; // how many squares should agents search for neighbors
 	boolean attract_similar = true;   // false similar, true is attractive
@@ -26,7 +25,7 @@ public class Environment extends SimStateSweep {
 	double sd_a = 0.1; 	// width of distribution -- standard deviation for attractiveness
 	double sd_s = 0.3;	// width of distribution for similarity
 	int mate_count = 0;  // counts number of removed pairs
-	boolean charts = true;
+	boolean charts = false;  // uses charts when true. false -- parameter sweeps are enabled
 	F_Matrix matrix; // Instance of F_Matrix for recording interactions
 	Bag allAgents; // Store all agents for interaction recording
 
@@ -100,7 +99,6 @@ public class Environment extends SimStateSweep {
 			agent.colorBySexuality(agent.sexuality, this, agent);
 			agent.event = schedule.scheduleRepeating(agent);
 			sparseSpace.setObjectLocation(agent, x, y);
-//			setNeighborhoods(x, y);
 		}
 	}
 	
@@ -111,7 +109,6 @@ public class Environment extends SimStateSweep {
 			System.out.println("too many agents :(");
 			return;
 		}
-		F_Matrix matrix = new F_Matrix(total);
 		
 		// straight males (blue)
 		agentTraits((int)(0.45 * total), Sexuality.STRAIGHT_M);
@@ -131,8 +128,8 @@ public class Environment extends SimStateSweep {
 	
 	public int[] createNeighborhood(int x, int y) {
 
-		int neighborhoodWidthSize =  gridWidth / neighborhoodWidth;
-		int neighborhoodHeightSize =  gridHeight / neighborhoodHeight;
+		int neighborhoodWidthSize =  gridWidth / neighborhoodSize;
+		int neighborhoodHeightSize =  gridHeight / neighborhoodSize;
 		
 		int x_neighborhood = x / neighborhoodWidthSize;
 	    int y_neighborhood = y / neighborhoodHeightSize;
@@ -146,7 +143,7 @@ public class Environment extends SimStateSweep {
 	public void start() {
 		super.start();
 		spaces = Spaces.SPARSE;	// set the space
-		make2DSpace(spaces, gridWidth, gridHeight); // make the space
+		makeSpace(gridWidth, gridHeight); // make the space
 		makeAgents();
 		if(observer != null)
 			observer.initialize(space, spaces);
@@ -237,30 +234,20 @@ public class Environment extends SimStateSweep {
         return matrix.getInteractionCount(agent1, agent2);
     }
     
-// // Method to check for interactions among agents in the same neighborhood
-//    public void checkInteractions() {
-//        // Iterate over all agents
-//    	if (allAgents == null || allAgents.isEmpty()) {
-//    		return;
-//    	}
-//        for (Object obj : allAgents) {
-//            Agent agent = (Agent) obj;
-//            Int2D location = sparseSpace.getObjectLocation(agent);
-//            int[] neighborhood = createNeighborhood(location.getX(), location.getY());
-//            
-//            // Iterate over all agents again to find those in the same neighborhood
-//            for (Object obj2 : allAgents) {
-//                Agent otherAgent = (Agent) obj2;
-//                Int2D otherLocation = sparseSpace.getObjectLocation(otherAgent);
-//                int[] otherNeighborhood = createNeighborhood(otherLocation.getX(), otherLocation.getY());
-//                
-//                // Check if agents are in the same neighborhood
-//                if (neighborhood[0] == otherNeighborhood[0] && neighborhood[1] == otherNeighborhood[1]) {
-//                    // Record interaction in the matrix
-//                    recordInteraction(agent.id, otherAgent.id);
-//                }
-//            }
-//        }
-    //}
+    public int getTotal() {
+    	return total;
+    }
+    
+    public void setTotal(int total) {
+    	this.total = total;
+    }
+    
+    public int getNeighborhoodSize() {
+    	return neighborhoodSize;
+    }
+    
+    public void setNeighborhoodSize(int neighborhoodSize) {
+    	this.neighborhoodSize = neighborhoodSize;
+    }
 
 }

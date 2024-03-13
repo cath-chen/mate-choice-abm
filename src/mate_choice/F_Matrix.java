@@ -22,7 +22,7 @@ public class F_Matrix {
         this.matrix[agent1][agent2]++;
         // For undirected interactions, increment count in both directions
         this.matrix[agent2][agent1]++;
-    	System.out.println("recorded interaction\n");
+//    	System.out.println("recorded interaction\n");
     }
 
     public int getInteractionCount(int agent1, int agent2) {

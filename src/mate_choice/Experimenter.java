@@ -2,24 +2,27 @@ package mate_choice;
 
 import observer.Observer;
 import sim.engine.SimState;
+import sim.engine.Steppable;
 import sim.util.Bag;
 import sweep.ParameterSweeper;
 import sweep.SimStateSweep;
 
-public class Experimenter extends Observer {
+public class Experimenter extends Observer implements Steppable {
 
-	public Experimenter(String fileName, String folderName, SimStateSweep state, ParameterSweeper sweeper,
-			String precision, String[] headers) {
-		super(fileName, folderName, state, sweeper, precision, headers);
-		// TODO Auto-generated constructor stub
-	}
-	
+	// global variable data we want to collect
 	public int gay = 0;
 	public int lesbian = 0;
 	public int straight_m = 0;
 	public int straight_f = 0;
 	public int bi_f = 0;
 	public int bi_m = 0;
+	public int mate_count = 0;
+	
+	public Experimenter(String fileName, String folderName, SimStateSweep state, ParameterSweeper sweeper,
+			String precision, String[] headers) {
+		super(fileName, folderName, state, sweeper, precision, headers);
+		// TODO Auto-generated constructor stub
+	}
 
 		
 	public void stop(Environment state) {
@@ -30,13 +33,13 @@ public class Experimenter extends Observer {
 	}
 		
 
-	public void countStrategies(Environment state) {
+	public void countSexualities(Environment state) {
 		Bag agents = state.sparseSpace.getAllObjects();
 		for(int i=0;i<agents.numObjs;i++) {
 			Agent a =(Agent)agents.objs[i];
 			switch(a.sexuality) {
 			case GAY:
-				gay ++;
+				gay++;
 				break;
 			case LESBIAN:
 				lesbian++;
@@ -64,6 +67,7 @@ public class Experimenter extends Observer {
 		straight_f = 0;
 		bi_f = 0;
 		bi_m = 0;
+		mate_count = 0;
 		return true;
 	}
 		
@@ -100,13 +104,14 @@ public class Experimenter extends Observer {
 
 	public void step(SimState state) {
 		super.step(state);
-		if(((Environment)state).charts && getdata) {
-			strategyDistribution((Environment) state);
+		Environment estate = (Environment)state;
+		if(estate.charts && getdata) {
+			strategyDistribution(estate);
 		}
-		if(((Environment)state).paramSweeps && getdata) {//for parameter sweeps
+		if(estate.paramSweeps && getdata) {   //for parameter sweeps
 			reset(state);
-			countStrategies((Environment) state);
-			nextInterval();
+			countSexualities(estate);   // count sexualities
+			nextInterval();   // saves data to a file
 		}
 		
 	}

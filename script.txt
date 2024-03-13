@@ -34,6 +34,7 @@ public int burnIn = 0;
 public double scheduleTimeInterval = 1.0;
 public boolean closeProgramAtend = true;
 public boolean customSweepOnly = false;
-public int neighborhoodSize = 10, 25, 50;
+public int neighborhoodSize = 10;
 public boolean familiar = true, false;
 public boolean attract_similar = true, false;
+

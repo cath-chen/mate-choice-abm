@@ -179,7 +179,7 @@ public class Environment extends SimStateSweep {
 	}
 
 	public boolean getAttract_similar() {
-		return this.attract_similar;
+		return attract_similar;
 	}
 	
 	public void setAttract_similar(boolean attract_similar) {
@@ -187,7 +187,7 @@ public class Environment extends SimStateSweep {
 	}
 	
 	public boolean getFamiliar() {
-		return this.familiar;
+		return familiar;
 	}
 	
 	public void setFamiliar(boolean familiar) {
@@ -195,7 +195,7 @@ public class Environment extends SimStateSweep {
 	}
 	
 	public int getMovementSize() {
-		return this.movementSize;
+		return movementSize;
 	}
 	
 	public void setMovementSize(int movementSize) {

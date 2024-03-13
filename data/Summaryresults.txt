@@ -47,3 +47,336 @@ burnIn  0
 scheduleTimeInterval  1.0
 closeProgramAtend  true
 customSweepOnly  false
+Parameter Sweeps
+
+Number of parameters swept: 6
+
+Table of parameters swept 
+public	int	neighborhoodSize	10	10	25	25	50	50	
+public	boolean	familiar	true	false	true	false	true	false	
+
+Parameter values for the class class mate_choice.Environment
+id  0
+nameSpace  SPARSE
+gridWidth  100
+gridHeight  100
+paramSweeps  true
+simLength  1001
+simNumber  10
+fileDataName  results.txt
+folderDataName  data
+dataSamplingInterval  1
+burnIn  0
+scheduleTimeInterval  1.0
+closeProgramAtend  true
+customSweepOnly  false
+neighborhoodSize	Value	familiar	Value	Step	Reps	N	gay	lesbian	straight_m	straight_f	bi_f	bi_m	Step	Reps	N	gay	lesbian	straight_m	straight_f	bi_f	bi_m	
+neighborhoodSize	10	familiar	true	1000.000	10.000	3.000	0.000	0.025	0.625	0.350	0.000	0.000	1000.000	10.000	0.333	0.000	0.025	0.067	0.067	0.000	0.000
+Parameter Sweeps
+
+Number of parameters swept: 6
+
+Table of parameters swept 
+public	int	neighborhoodSize	10	10	25	25	50	50	
+public	boolean	familiar	true	false	true	false	true	false	
+
+Parameter values for the class class mate_choice.Environment
+id  0
+nameSpace  SPARSE
+gridWidth  100
+gridHeight  100
+paramSweeps  true
+simLength  1001
+simNumber  10
+fileDataName  results.txt
+folderDataName  data
+dataSamplingInterval  1
+burnIn  0
+scheduleTimeInterval  1.0
+closeProgramAtend  true
+customSweepOnly  false
+Parameter Sweeps
+
+Number of parameters swept: 6
+
+Table of parameters swept 
+public	int	neighborhoodSize	10	10	25	25	50	50	
+public	boolean	familiar	true	false	true	false	true	false	
+
+Parameter values for the class class mate_choice.Environment
+id  0
+nameSpace  SPARSE
+gridWidth  100
+gridHeight  100
+paramSweeps  true
+simLength  1001
+simNumber  10
+fileDataName  results.txt
+folderDataName  data
+dataSamplingInterval  1
+burnIn  0
+scheduleTimeInterval  1.0
+closeProgramAtend  true
+customSweepOnly  false
+Parameter Sweeps
+
+Number of parameters swept: 6
+
+Table of parameters swept 
+public	int	neighborhoodSize	10	10	25	25	50	50	
+public	boolean	familiar	true	false	true	false	true	false	
+
+Parameter values for the class class mate_choice.Environment
+id  0
+nameSpace  SPARSE
+gridWidth  100
+gridHeight  100
+paramSweeps  true
+simLength  1001
+simNumber  10
+fileDataName  results.txt
+folderDataName  data
+dataSamplingInterval  1
+burnIn  0
+scheduleTimeInterval  1.0
+closeProgramAtend  true
+customSweepOnly  false
+Parameter Sweeps
+
+Number of parameters swept: 6
+
+Table of parameters swept 
+public	int	neighborhoodSize	10	10	25	25	50	50	
+public	boolean	familiar	true	false	true	false	true	false	
+
+Parameter values for the class class mate_choice.Environment
+id  0
+nameSpace  SPARSE
+gridWidth  100
+gridHeight  100
+paramSweeps  true
+simLength  1001
+simNumber  10
+fileDataName  results.txt
+folderDataName  data
+dataSamplingInterval  1
+burnIn  0
+scheduleTimeInterval  1.0
+closeProgramAtend  true
+customSweepOnly  false
+neighborhoodSize	Value	familiar	Value	Step	Reps	N	gay	lesbian	straight_m	straight_f	bi_f	bi_m	Step	Reps	N	gay	lesbian	straight_m	straight_f	bi_f	bi_m	
+neighborhoodSize	10	familiar	true	1000.000	8.000	3.750	0.000	0.031	0.417	0.552	0.000	0.000	1000.000	8.000	0.453	0.000	0.031	0.114	0.130	0.000	0.000
+Parameter Sweeps
+
+Number of parameters swept: 6
+
+Table of parameters swept 
+public	int	neighborhoodSize	10	10	25	25	50	50	
+public	boolean	familiar	true	false	true	false	true	false	
+
+Parameter values for the class class mate_choice.Environment
+id  0
+nameSpace  SPARSE
+gridWidth  100
+gridHeight  100
+paramSweeps  true
+simLength  1001
+simNumber  10
+fileDataName  results.txt
+folderDataName  data
+dataSamplingInterval  1
+burnIn  0
+scheduleTimeInterval  1.0
+closeProgramAtend  true
+customSweepOnly  false
+neighborhoodSize	Value	familiar	Value	Step	Reps	N	gay	lesbian	straight_m	straight_f	bi_f	bi_m	Step	Reps	N	gay	lesbian	straight_m	straight_f	bi_f	bi_m	
+neighborhoodSize	10	familiar	true	1000.000	10.000	4.600	0.013	0.000	0.521	0.467	0.000	0.000	1000.000	10.000	0.600	0.013	0.000	0.085	0.084	0.000	0.000
+Parameter Sweeps
+
+Number of parameters swept: 6
+
+Table of parameters swept 
+public	int	neighborhoodSize	10	10	25	25	50	50	
+public	boolean	familiar	true	false	true	false	true	false	
+
+Parameter values for the class class mate_choice.Environment
+id  0
+nameSpace  SPARSE
+gridWidth  100
+gridHeight  100
+paramSweeps  true
+simLength  10000
+simNumber  10
+fileDataName  results.txt
+folderDataName  data
+dataSamplingInterval  1
+burnIn  0
+scheduleTimeInterval  1.0
+closeProgramAtend  true
+customSweepOnly  false
+neighborhoodSize	Value	familiar	Value	Step	Reps	N	gay	lesbian	straight_m	straight_f	bi_f	bi_m	Step	Reps	N	gay	lesbian	straight_m	straight_f	bi_f	bi_m	
+neighborhoodSize	10	familiar	true	9999.000	4.000	2.000	0.000	0.000	0.250	0.750	0.000	0.000	9999.000	4.000	0.000	0.000	0.000	0.250	0.250	0.000	0.000
+Parameter Sweeps
+
+Number of parameters swept: 6
+
+Table of parameters swept 
+public	int	neighborhoodSize	10	10	25	25	50	50	
+public	boolean	familiar	true	false	true	false	true	false	
+
+Parameter values for the class class mate_choice.Environment
+id  0
+nameSpace  SPARSE
+gridWidth  100
+gridHeight  100
+paramSweeps  true
+simLength  1001
+simNumber  10
+fileDataName  results.txt
+folderDataName  data
+dataSamplingInterval  1
+burnIn  0
+scheduleTimeInterval  1.0
+closeProgramAtend  true
+customSweepOnly  false
+Parameter Sweeps
+
+Number of parameters swept: 6
+
+Table of parameters swept 
+public	int	neighborhoodSize	10	10	25	25	50	50	
+public	boolean	familiar	true	false	true	false	true	false	
+
+Parameter values for the class class mate_choice.Environment
+id  0
+nameSpace  SPARSE
+gridWidth  100
+gridHeight  100
+paramSweeps  true
+simLength  1001
+simNumber  10
+fileDataName  results.txt
+folderDataName  data
+dataSamplingInterval  1
+burnIn  0
+scheduleTimeInterval  1.0
+closeProgramAtend  true
+customSweepOnly  false
+Parameter Sweeps
+
+Number of parameters swept: 6
+
+Table of parameters swept 
+public	int	neighborhoodSize	10	10	25	25	50	50	
+public	boolean	familiar	true	false	true	false	true	false	
+
+Parameter values for the class class mate_choice.Environment
+id  0
+nameSpace  SPARSE
+gridWidth  100
+gridHeight  100
+paramSweeps  true
+simLength  1001
+simNumber  10
+fileDataName  results.txt
+folderDataName  data
+dataSamplingInterval  1
+burnIn  0
+scheduleTimeInterval  1.0
+closeProgramAtend  true
+customSweepOnly  false
+Parameter Sweeps
+
+Number of parameters swept: 12
+
+Table of parameters swept 
+public	int	neighborhoodSize	10	10	10	10	25	25	25	25	50	50	50	50	
+public	boolean	familiar	true	true	false	false	true	true	false	false	true	true	false	false	
+public	boolean	attract_similar	true	false	true	false	true	false	true	false	true	false	true	false	
+
+Parameter values for the class class mate_choice.Environment
+id  0
+nameSpace  SPARSE
+gridWidth  100
+gridHeight  100
+paramSweeps  true
+simLength  1001
+simNumber  10
+fileDataName  results.txt
+folderDataName  data
+dataSamplingInterval  1
+burnIn  0
+scheduleTimeInterval  1.0
+closeProgramAtend  true
+customSweepOnly  false
+Parameter Sweeps
+
+Number of parameters swept: 12
+
+Table of parameters swept 
+public	int	neighborhoodSize	10	10	10	10	25	25	25	25	50	50	50	50	
+public	boolean	familiar	true	true	false	false	true	true	false	false	true	true	false	false	
+public	boolean	attract_similar	true	false	true	false	true	false	true	false	true	false	true	false	
+
+Parameter values for the class class mate_choice.Environment
+id  0
+nameSpace  SPARSE
+gridWidth  100
+gridHeight  100
+paramSweeps  true
+simLength  1001
+simNumber  10
+fileDataName  results.txt
+folderDataName  data
+dataSamplingInterval  1
+burnIn  0
+scheduleTimeInterval  1.0
+closeProgramAtend  true
+customSweepOnly  false
+Parameter Sweeps
+
+Number of parameters swept: 12
+
+Table of parameters swept 
+public	int	neighborhoodSize	10	10	10	10	25	25	25	25	50	50	50	50	
+public	boolean	familiar	true	true	false	false	true	true	false	false	true	true	false	false	
+public	boolean	attract_similar	true	false	true	false	true	false	true	false	true	false	true	false	
+
+Parameter values for the class class mate_choice.Environment
+id  0
+nameSpace  SPARSE
+gridWidth  100
+gridHeight  100
+paramSweeps  true
+simLength  1001
+simNumber  10
+fileDataName  results.txt
+folderDataName  data
+dataSamplingInterval  1
+burnIn  0
+scheduleTimeInterval  1.0
+closeProgramAtend  true
+customSweepOnly  false
+Parameter Sweeps
+
+Number of parameters swept: 4
+
+Table of parameters swept 
+public	boolean	familiar	true	true	false	false	
+public	boolean	attract_similar	true	false	true	false	
+
+Parameter values for the class class mate_choice.Environment
+id  0
+nameSpace  SPARSE
+gridWidth  100
+gridHeight  100
+paramSweeps  true
+simLength  1001
+simNumber  10
+fileDataName  results.txt
+folderDataName  data
+dataSamplingInterval  1
+burnIn  0
+scheduleTimeInterval  1.0
+closeProgramAtend  true
+customSweepOnly  false

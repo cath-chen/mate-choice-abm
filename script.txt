@@ -25,7 +25,7 @@ public String nameSpace = "SPARSE";
 public int gridWidth = 100;
 public int gridHeight = 100;
 public boolean paramSweeps = true;
-public long simLength = 1000;
+public long simLength = 1001;
 public int simNumber = 10;
 public String fileDataName = "results.txt";
 public String folderDataName = "data";
@@ -34,7 +34,3 @@ public int burnIn = 0;
 public double scheduleTimeInterval = 1.0;
 public boolean closeProgramAtend = true;
 public boolean customSweepOnly = false;
-public int neighborhoodSize = 10;
-public boolean familiar = true, false;
-public boolean attract_similar = true, false;
-

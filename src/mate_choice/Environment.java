@@ -54,6 +54,7 @@ public class Environment extends SimStateSweep {
 		
 		double attractive_rate = 0.0;
 		double similar_rate = 0.0;
+		double preference_threshold = 0;
 		
 		for(int i = 0; i < num_of_agent; i++) {
 			int x = random.nextInt(gridWidth);
@@ -67,6 +68,7 @@ public class Environment extends SimStateSweep {
 				} else if (attractive_rate < 0) {
 					attractive_rate = 0;
 				}
+				preference_threshold = attractive_rate - 0.2;
 			} else {
 				similar_rate = normal_s.nextDouble();
 				if (similar_rate > 1.0) {
@@ -74,6 +76,7 @@ public class Environment extends SimStateSweep {
 				} else if (similar_rate < 0) {
 					similar_rate = 0;
 				}
+				preference_threshold = (random.nextInt(3) + 2)/10;
 			}
 			
 			double rate;
@@ -103,6 +106,7 @@ public class Environment extends SimStateSweep {
 	}
 	
 	public void makeAgents() {
+		id = 0;
 		int size = gridWidth * gridHeight;
 	
 		if (total > size) {
@@ -154,6 +158,14 @@ public class Environment extends SimStateSweep {
 	
 	// Getters and setters
 
+    public static int getId() {
+		return id;
+	}
+
+	public static void setId(int id) {
+		Environment.id = id;
+	}
+
 	public int getGridWidth() {
 		return gridWidth;
 	}
@@ -170,6 +182,22 @@ public class Environment extends SimStateSweep {
 		this.gridHeight = gridHeight;
 	}
 
+	public int getNeighborhoodSize() {
+		return neighborhoodSize;
+	}
+
+	public void setNeighborhoodSize(int neighborhoodSize) {
+		this.neighborhoodSize = neighborhoodSize;
+	}
+
+	public int getTotal() {
+		return total;
+	}
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
+
 	public int getSearchRadius() {
 		return searchRadius;
 	}
@@ -178,30 +206,30 @@ public class Environment extends SimStateSweep {
 		this.searchRadius = searchRadius;
 	}
 
-	public boolean getAttract_similar() {
+	public boolean isAttract_similar() {
 		return attract_similar;
 	}
-	
+
 	public void setAttract_similar(boolean attract_similar) {
 		this.attract_similar = attract_similar;
 	}
-	
-	public boolean getFamiliar() {
+
+	public boolean isFamiliar() {
 		return familiar;
 	}
-	
+
 	public void setFamiliar(boolean familiar) {
 		this.familiar = familiar;
 	}
-	
+
 	public int getMovementSize() {
 		return movementSize;
 	}
-	
+
 	public void setMovementSize(int movementSize) {
 		this.movementSize = movementSize;
 	}
-	
+
 	public double getP() {
 		return p;
 	}
@@ -210,14 +238,38 @@ public class Environment extends SimStateSweep {
 		this.p = p;
 	}
 
-	public int get_mateCount(int mate_count) {
+	public double getPreference_threshold() {
+		return preference_threshold;
+	}
+
+	public void setPreference_threshold(double preference_threshold) {
+		this.preference_threshold = preference_threshold;
+	}
+
+	public double getSd_a() {
+		return sd_a;
+	}
+
+	public void setSd_a(double sd_a) {
+		this.sd_a = sd_a;
+	}
+
+	public double getSd_s() {
+		return sd_s;
+	}
+
+	public void setSd_s(double sd_s) {
+		this.sd_s = sd_s;
+	}
+
+	public int getMate_count() {
 		return mate_count;
 	}
-	
-	public void setMateCount(int mate_count) {
+
+	public void setMate_count(int mate_count) {
 		this.mate_count = mate_count;
 	}
-	
+
 	public boolean isCharts() {
 		return charts;
 	}
@@ -225,29 +277,36 @@ public class Environment extends SimStateSweep {
 	public void setCharts(boolean charts) {
 		this.charts = charts;
 	}
+
+	public F_Matrix getMatrix() {
+		return matrix;
+	}
+
+	public void setMatrix(F_Matrix matrix) {
+		this.matrix = matrix;
+	}
+
+	public Bag getAllAgents() {
+		return allAgents;
+	}
+
+	public void setAllAgents(Bag allAgents) {
+		this.allAgents = allAgents;
+	}
 	
+	public int get_mateCount(int mate_count) {
+		return mate_count;
+	}
+	
+	public void setMateCount(int mate_count) {
+		this.mate_count = mate_count;
+	}
+
 	public void recordInteraction(int agent1, int agent2) {
         matrix.recordInteraction(agent1, agent2);
     }
-
-    public int getInteractionCount(int agent1, int agent2) {
+	
+	public int getInteractionCount(int agent1, int agent2) {
         return matrix.getInteractionCount(agent1, agent2);
     }
-    
-    public int getTotal() {
-    	return total;
-    }
-    
-    public void setTotal(int total) {
-    	this.total = total;
-    }
-    
-    public int getNeighborhoodSize() {
-    	return neighborhoodSize;
-    }
-    
-    public void setNeighborhoodSize(int neighborhoodSize) {
-    	this.neighborhoodSize = neighborhoodSize;
-    }
-
 }

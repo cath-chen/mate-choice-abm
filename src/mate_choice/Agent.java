@@ -41,6 +41,7 @@ public class Agent implements Steppable {
 		this.ydir = ydir;
 		this.hood = neighborhood;
 		this.move_count = 0;
+		this.id = id;
 	}
 	
 	public void move(Environment state) {
@@ -97,9 +98,9 @@ public class Agent implements Steppable {
 		
 		
 		// if toggled on --> attractive
-		if (state.attract_similar) {
-			preference = this.a_rate - 0.2;
-			if (state.familiar) {
+		if (state.isAttract_similar()) {
+			preference = preference_threshold;
+			if (state.isFamiliar()) {
 				// familiarity subtracts 0.5 from preference for each increase in score
 				double f_score = state.getInteractionCount(this.id, a.id)/20;
 				preference = preference - f_score;
@@ -111,13 +112,13 @@ public class Agent implements Steppable {
 				return;
 			} else {
 				// lower threshold
-				preference -= 0.1;
+				preference_threshold -= 0.1;
 				return;
 			}
 		} else {
-			preference = (state.random.nextInt(3) + 2)/10; 			// TODO update preferences threshold?
+			preference = preference_threshold;
 			double s_range = Math.abs(this.s_rate - a.s_rate);
-			if (state.familiar) {
+			if (state.isFamiliar()) {
 				// familiarity adds 0.5 from preference range for each increase in score
 				double f_score = state.getInteractionCount(this.id, a.id)/20;
 				preference = preference + f_score;
@@ -128,7 +129,7 @@ public class Agent implements Steppable {
 				return;
 			} else {
 				// increase threshold
-				preference_threshold += 0.1;
+				preference_threshold += 0.05;
 				return;
 			}
 		}

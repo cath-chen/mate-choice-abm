@@ -105,9 +105,9 @@ public class Experimenter extends Observer implements Steppable {
 	public void step(SimState state) {
 		super.step(state);
 		Environment estate = (Environment)state;
-		if(estate.charts && getdata) {
-			strategyDistribution(estate);
-		}
+//		if(estate.charts && getdata) {
+//			strategyDistribution(estate);
+//		}
 		if(estate.paramSweeps && getdata) {   //for parameter sweeps
 			reset(state);
 			countSexualities(estate);   // count sexualities

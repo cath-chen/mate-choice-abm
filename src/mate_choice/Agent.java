@@ -70,9 +70,9 @@ public class Agent implements Steppable {
 		if (neighbors != null && !neighbors.isEmpty()) {
 			mateDecision(state, neighbors);
 		} else {
-			move(state);
 			return;
 		}
+		return;
 	}
 	
 	
@@ -84,7 +84,6 @@ public class Agent implements Steppable {
 		if (this.sexuality == Sexuality.GAY || this.sexuality == Sexuality.BI_M || this.sexuality == Sexuality.STRAIGHT_M) {
 			// agent a into males
 			if (!(a.sexuality == Sexuality.BI_F || a.sexuality == Sexuality.BI_M || a.sexuality == Sexuality.STRAIGHT_F || a.sexuality == Sexuality.GAY)) {
-				move(state);
 				return;
 			}
 		} 
@@ -92,16 +91,15 @@ public class Agent implements Steppable {
 		else {
 			// if agent a is into females
 			if (!(a.sexuality == Sexuality.BI_F || a.sexuality == Sexuality.BI_M || a.sexuality == Sexuality.STRAIGHT_M || a.sexuality == Sexuality.LESBIAN)) {
-				move(state);
 				return;
 			}
 		}
 		
 		
 		// if toggled on --> attractive
-		if (state.getAttract_similar()) {
+		if (state.attract_similar) {
 			preference = this.a_rate - 0.2;
-			if (state.getFamiliar()) {
+			if (state.familiar) {
 				// familiarity subtracts 0.5 from preference for each increase in score
 				double f_score = state.getInteractionCount(this.id, a.id)/20;
 				preference = preference - f_score;
@@ -114,13 +112,12 @@ public class Agent implements Steppable {
 			} else {
 				// lower threshold
 				preference -= 0.1;
-				move(state);
 				return;
 			}
 		} else {
-			preference = (state.random.nextInt(3) + 2)/10;
+			preference = (state.random.nextInt(3) + 2)/10; 			// TODO update preferences threshold?
 			double s_range = Math.abs(this.s_rate - a.s_rate);
-			if (state.getFamiliar()) {
+			if (state.familiar) {
 				// familiarity adds 0.5 from preference range for each increase in score
 				double f_score = state.getInteractionCount(this.id, a.id)/20;
 				preference = preference + f_score;
@@ -131,8 +128,7 @@ public class Agent implements Steppable {
 				return;
 			} else {
 				// increase threshold
-				preference += 0.1;
-				move(state);
+				preference_threshold += 0.1;
 				return;
 			}
 		}
@@ -152,17 +148,16 @@ public class Agent implements Steppable {
         // Iterate over all agents again to find those in the same neighborhood
         for (Object obj : state.allAgents) {
             Agent otherAgent = (Agent) obj;
-            if (this == otherAgent) {
-            	continue;
-            }
-            Int2D otherLocation = state.sparseSpace.getObjectLocation(otherAgent);
-            int[] otherNeighborhood = state.createNeighborhood(otherLocation.getX(), otherLocation.getY());
-            
-            // Check if agents are in the same neighborhood
-            if (hood[0] == otherNeighborhood[0] && hood[1] == otherNeighborhood[1]) {
-                // Record interaction in the matrix
-//            	System.out.println("same neighborhood\n" + state.allAgents.size());
-                state.recordInteraction(this.id, otherAgent.id);
+            if (this != otherAgent) {
+            	 Int2D otherLocation = state.sparseSpace.getObjectLocation(otherAgent);
+                 int[] otherNeighborhood = state.createNeighborhood(otherLocation.getX(), otherLocation.getY());
+                 
+                 // Check if agents are in the same neighborhood
+                 if (hood[0] == otherNeighborhood[0] && hood[1] == otherNeighborhood[1]) {
+                     // Record interaction in the matrix
+//                 	System.out.println("same neighborhood\n" + state.allAgents.size());
+                     state.recordInteraction(this.id, otherAgent.id);
+                 }
             }
         }
 	}

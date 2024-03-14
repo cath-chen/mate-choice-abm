@@ -25,8 +25,8 @@ public class Environment extends SimStateSweep {
 	double sd_a = 0.1; 	// width of distribution -- standard deviation for attractiveness
 	double sd_s = 0.3;	// width of distribution for similarity
 	int mate_count = 0;  // counts number of removed pairs
-	boolean charts = false;  // uses charts when true. false -- parameter sweeps are enabled
-	F_Matrix matrix; // Instance of F_Matrix for recording interactions
+	boolean charts = true;  // uses charts when true. false -- parameter sweeps are enabled
+	public F_Matrix matrix; // Instance of F_Matrix for recording interactions
 	Bag allAgents; // Store all agents for interaction recording
 
 	

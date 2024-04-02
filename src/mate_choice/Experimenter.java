@@ -34,6 +34,8 @@ public class Experimenter extends Observer implements Steppable {
 		
 
 	public void countSexualities(Environment state) {
+		
+		mate_count = state.mate_count;
 		Bag agents = state.sparseSpace.getAllObjects();
 		for(int i=0;i<agents.numObjs;i++) {
 			Agent a =(Agent)agents.objs[i];
@@ -79,6 +81,7 @@ public class Experimenter extends Observer implements Steppable {
 	public boolean nextInterval() {
 		double total = gay + lesbian + straight_m + straight_f + bi_f + bi_f;
 		data.add(total);
+		data.add(mate_count);
 		data.add(gay/total);
 		data.add(lesbian/total);
 		data.add(straight_m/total);

@@ -21,12 +21,36 @@ After 3 parameters are encountered with more than one value, subsequent paramete
 one value are ignored.*/
 
 
+<<<<<<< Updated upstream
+=======
+public int gridWidth = 100;
+public int gridHeight = 100;
+public int neighborhoodSize = 10;
+public int total = 100;
+public int searchRadius = 5;
+public boolean attract_similar = true, false;
+public boolean familiar = false;
+public int movementSize = 1;
+public double p = 1.0;
+public double threshold = 0.05;
+public int mate_count = 0;
+public boolean charts = false;
+public double alpha_a = 2.0;
+public double alpha_s = 2.0;
+public double beta_a = 2.0;
+public double beta_s = 2.0;
+>>>>>>> Stashed changes
 public String nameSpace = "SPARSE";
 public int gridWidth = 100;
 public int gridHeight = 100;
 public boolean paramSweeps = true;
+<<<<<<< Updated upstream
 public long simLength = 1001;
 public int simNumber = 10;
+=======
+public long simLength = 101;
+public int simNumber = 1;
+>>>>>>> Stashed changes
 public String fileDataName = "results.txt";
 public String folderDataName = "data";
 public int dataSamplingInterval = 1;

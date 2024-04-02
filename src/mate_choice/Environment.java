@@ -60,6 +60,7 @@ public class Environment extends SimStateSweep {
 			int x = random.nextInt(gridWidth);
 			int y = random.nextInt(gridHeight);
 			int id = this.id++;
+<<<<<<< Updated upstream
 			
 			if (attract_similar) { 		// if attrative
 				attractive_rate = normal_a.nextDouble();
@@ -77,19 +78,25 @@ public class Environment extends SimStateSweep {
 					similar_rate = 0;
 				}
 				preference_threshold = (random.nextInt(3) + 2)/10;
+=======
+			double rate;
+			// need clarification for preference threshold
+			
+			if (attract_similar) { 		// if attrative
+				rate = dist_a.nextDouble();
+				preference_threshold = threshold;
+			} else {
+				rate = dist_s.nextDouble();
+				preference_threshold = threshold;
+>>>>>>> Stashed changes
 			}
 			
-			double rate;
-			if (attract_similar) {
-				rate = attractive_rate;
-			} else {
-				rate = similar_rate;
-			}
 		
 			Bag b = sparseSpace.getObjectsAtLocation(x, y);
 			while (b != null) {
 				y = random.nextInt(gridHeight);
 				x = random.nextInt(gridWidth);
+				b = sparseSpace.getObjectsAtLocation(x, y);
 			}
 		
 			int xdir = random.nextInt(3) - 1;
@@ -97,12 +104,22 @@ public class Environment extends SimStateSweep {
 			
 			int[] neighborhood = createNeighborhood(x, y);
 			
+<<<<<<< Updated upstream
 			Agent agent =  new Agent(id, attract_similar, rate, sexuality, preference_threshold, x, y, xdir ,ydir, neighborhood);
 			 
+=======
+			Agent agent =  new Agent(id, rate, sexuality, preference_threshold, x, y, xdir ,ydir, neighborhood);
+			
+			
+>>>>>>> Stashed changes
 			agent.colorBySexuality(agent.sexuality, this, agent);
 			agent.event = schedule.scheduleRepeating(agent);
 			sparseSpace.setObjectLocation(agent, x, y);
 		}
+<<<<<<< Updated upstream
+=======
+		//System.out.print(num_agents + " " + sexuality + "\n");
+>>>>>>> Stashed changes
 	}
 	
 	public void makeAgents() {
@@ -146,6 +163,7 @@ public class Environment extends SimStateSweep {
 	
 	public void start() {
 		super.start();
+		mate_count = 0;
 		spaces = Spaces.SPARSE;	// set the space
 		makeSpace(gridWidth, gridHeight); // make the space
 		makeAgents();

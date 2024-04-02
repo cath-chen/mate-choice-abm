@@ -75,23 +75,35 @@ public class Agent implements Steppable {
 		}
 		return;
 	}
-	
+
+	 
 	
 	public void mateDecision(Environment state, Bag neighbors) {
 		Agent a = (Agent)neighbors.objs[0];
 		double preference;
 		
-		// if the curr agent is male
-		if (this.sexuality == Sexuality.GAY || this.sexuality == Sexuality.BI_M || this.sexuality == Sexuality.STRAIGHT_M) {
-			// agent a into males
-			if (!(a.sexuality == Sexuality.BI_F || a.sexuality == Sexuality.BI_M || a.sexuality == Sexuality.STRAIGHT_F || a.sexuality == Sexuality.GAY)) {
+		if (this.sexuality == Sexuality.BI_F) {
+			if (a.sexuality == Sexuality.GAY || a.sexuality == Sexuality.STRAIGHT_F) {
 				return;
 			}
-		} 
-		// if the curr agent is female
-		else {
-			// if agent a is into females
-			if (!(a.sexuality == Sexuality.BI_F || a.sexuality == Sexuality.BI_M || a.sexuality == Sexuality.STRAIGHT_M || a.sexuality == Sexuality.LESBIAN)) {
+		} else if (this.sexuality == Sexuality.BI_M) {
+			if (a.sexuality == Sexuality.LESBIAN || a.sexuality == Sexuality.STRAIGHT_M) {
+				return;
+			}
+		} else if (this.sexuality == Sexuality.GAY) {
+			if (a.sexuality == Sexuality.STRAIGHT_M || a.sexuality == Sexuality.STRAIGHT_F || a.sexuality == Sexuality.BI_F || a.sexuality == Sexuality.LESBIAN) {
+				return;
+			}
+		} else if (this.sexuality == Sexuality.LESBIAN) {
+			if (a.sexuality == Sexuality.STRAIGHT_M || a.sexuality == Sexuality.STRAIGHT_F || a.sexuality == Sexuality.BI_M || a.sexuality == Sexuality.GAY) {
+				return;
+			}
+		} else if (this.sexuality == Sexuality.STRAIGHT_F) {
+			if (a.sexuality == Sexuality.BI_F || a.sexuality == Sexuality.GAY || a.sexuality == Sexuality.LESBIAN) {
+				return;
+			}
+		} else {
+			if (a.sexuality == Sexuality.BI_M || a.sexuality == Sexuality.LESBIAN || a.sexuality == Sexuality.GAY) {
 				return;
 			}
 		}
@@ -115,6 +127,7 @@ public class Agent implements Steppable {
 				preference_threshold -= 0.1;
 				return;
 			}
+		// if the sim is testing for similarity
 		} else {
 			preference = preference_threshold;
 			double s_range = Math.abs(this.s_rate - a.s_rate);
@@ -172,8 +185,8 @@ public class Agent implements Steppable {
 	
 	public void colorBySexuality(Sexuality sexuality, Environment state, Agent a) {
 		switch (sexuality) {
-		case LESBIAN: // magenta
-			state.gui.setOvalPortrayal2DColor(a, (float)1, (float)0, (float)1, (float)1);
+		case LESBIAN: // orange
+			state.gui.setOvalPortrayal2DColor(a, (float)1, (float)0.5, (float)0, (float)1);
 			break;
 		case GAY: // cyan
 			state.gui.setOvalPortrayal2DColor(a, (float)0, (float)1, (float)1, (float)1);
@@ -184,11 +197,11 @@ public class Agent implements Steppable {
 		case STRAIGHT_F: // red
 			state.gui.setOvalPortrayal2DColor(a, (float)1, (float)0, (float)0, (float)1);
 			break;
-		case BI_M: // green
+		case BI_M: // purple
 			state.gui.setOvalPortrayal2DColor(a, (float)0, (float)1, (float)0, (float)1);
 			break;
-		case BI_F: // yellow
-			state.gui.setOvalPortrayal2DColor(a, (float)1, (float)1, (float)0, (float)1);
+		case BI_F: // pink
+			state.gui.setOvalPortrayal2DColor(a, (float)1, (float)0.2, (float)1, (float)1);
 			break;
 		default:
 			state.gui.setOvalPortrayal2DColor(a, (float)1, (float)1, (float)1, (float)1);

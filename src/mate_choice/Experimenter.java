@@ -77,7 +77,7 @@ public class Experimenter extends Observer implements Steppable {
 	 * @return
 	 */
 	public boolean nextInterval() {
-		double total = gay + lesbian + straight_m + straight_f + bi_f + bi_f;
+		double total = state.sparseSpace.getAllObjects().numObjs;
 		data.add(total);
 		data.add(gay/total);
 		data.add(lesbian/total);

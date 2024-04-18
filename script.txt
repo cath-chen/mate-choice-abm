@@ -21,13 +21,13 @@ After 3 parameters are encountered with more than one value, subsequent paramete
 one value are ignored.*/
 
 
-public int gridWidth = 100;
-public int gridHeight = 100;
-public int neighborhoodSize = 10;
-public int total = 50;
-public int searchRadius = 5;
-public boolean attract_similar = false, true;
-public boolean familiar = false;
+public int gridWidth = 200;
+public int gridHeight = 200;
+public int neighborhoodSize = 10, 25, 50;
+public int total = 1000;
+public int searchRadius = 1, 2, 5;
+public boolean attract_similar = true, false;
+public boolean familiar = true;
 public int movementSize = 1;
 public double p = 1.0;
 public double threshold = 0.05;

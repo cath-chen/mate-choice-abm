@@ -15,14 +15,14 @@ public class Environment extends SimStateSweep {
 	public static int id = 0;
 	public int gridWidth = 100;
 	public int gridHeight = 100;
-	public int neighborhoodSize = 10;
+	public int neighborhoodSize = 50; ///Essential = # of neighborhoods in the space 
 	public int total = 50;
 	public int searchRadius = 5; // how many squares should agents search for neighbors
 	public boolean attract_similar = true;   // false similar, true is attractive
 	public boolean familiar = true;
 	public int movementSize = 1;
-	public double p = 1; // probability that the agent is active
-	public double threshold = 0.05;
+	public double p = .8; // probability that the agent is active
+	public double threshold = 0.1;
 	public int mate_count = 0;  // counts number of removed pairs
 	public boolean charts = false;  // uses charts when true. false -- parameter sweeps are enabled
 	public F_Matrix matrix; // Instance of F_Matrix for recording interactions
@@ -31,7 +31,11 @@ public class Environment extends SimStateSweep {
 	public double alpha_s = 2;
 	public double beta_a = 2; 
 	public double beta_s = 2;	
-	
+	public Bag similarity = new Bag();
+	public Bag familiarity = new Bag();
+	public Bag attractiveness = new Bag();
+	int actual_n;
+	int updateFam = 10;
 
 
 	
@@ -50,7 +54,6 @@ public class Environment extends SimStateSweep {
 	public Environment(long seed, Class observer, String runTimeFileName) {
 		super(seed, observer, runTimeFileName);
 		// TODO Auto-generated constructor stub
-		this.matrix = new F_Matrix(total);
 	}
 	
 	public void agentTraits(int num_of_agent, Sexuality sexuality) {
@@ -61,31 +64,30 @@ public class Environment extends SimStateSweep {
 		double attractive_rate = 0.0;
 		double similar_rate = 0.0;
 		double preference_threshold = 0;
-		
 		int num_agents = 0;
-		
 		for(int i = 0; i < num_of_agent; i++) {
 			int x = random.nextInt(gridWidth);
 			int y = random.nextInt(gridHeight);
 			int id = this.id++;
-			double rate;
+			
 			// need clarification for preference threshold
 			
 			if (attract_similar) { 		// if attrative
-				rate = dist_a.nextDouble();
-				preference_threshold = threshold;
+				attractive_rate = dist_a.nextDouble();
+				preference_threshold = 1 - threshold;
 			} else {
-				rate = dist_s.nextDouble();
+				similar_rate = dist_s.nextDouble();
 				preference_threshold = threshold;
 			}
 			
-		
-			Bag b = sparseSpace.getObjectsAtLocation(x, y);
-			while (b != null) {
-				y = random.nextInt(gridHeight);
-				x = random.nextInt(gridWidth);
-				b = sparseSpace.getObjectsAtLocation(x, y);
+			double rate;
+			if (attract_similar) {
+				rate = attractive_rate;
+			} else {
+				rate = similar_rate;
 			}
+		
+			
 		
 			int xdir = random.nextInt(3) - 1;
 			int ydir = random.nextInt(3) - 1;
@@ -128,6 +130,7 @@ public class Environment extends SimStateSweep {
 
 		
 		allAgents = sparseSpace.getAllObjects();
+		actual_n = allAgents.numObjs;
 	}
 	
 	public int[] createNeighborhood(int x, int y) {
@@ -158,6 +161,7 @@ public class Environment extends SimStateSweep {
 		spaces = Spaces.SPARSE;	// set the space
 		makeSpace(gridWidth, gridHeight); // make the space
 		makeAgents();
+		this.matrix = new F_Matrix(actual_n);
 		if(observer != null)
 			observer.initialize(space, spaces);
 	}

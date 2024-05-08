@@ -8,6 +8,6 @@ Scriptname: script.txt // The name of the file for parameter sweeps
 DataFolder: data //Folder holding simulation results
 DataFile: results.txt //Name of results file.
 CheckSweepOptions: true //Determines whether parameter sweeps is automatically checked.
-ColumnHeaders: N, gay, lesbian, straight_m, straight_f, bi_f, bi_m //The column headers for the data file, 'steps' and 'rep' are prepended to this list
+ColumnHeaders: total, mate_count, gay , lesbian, straight_m, straight_f, bi_f, bi_m, avgSim, avgFam, avgAtt //The column headers for the data file, 'steps' and 'rep' are prepended to this list
 Precision: 3  //Numerical precision for data, must be an integer.
 stopWhenNoAgents: true  //The simulation will stop when there are no agents left, else it will run to the stopping time even if there are not agents.

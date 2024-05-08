@@ -21,31 +21,31 @@ After 3 parameters are encountered with more than one value, subsequent paramete
 one value are ignored.*/
 
 
-public int gridWidth = 200;
-public int gridHeight = 200;
+public int gridWidth = 100;
+public int gridHeight = 100;
 public int neighborhoodSize = 10, 25, 50;
-public int total = 1000;
+public int total = 500;
 public int searchRadius = 1, 2, 5;
-public boolean attract_similar = true, false;
+public boolean attract_similar = false;
 public boolean familiar = true;
-public int movementSize = 1;
-public double p = 1.0;
-public double threshold = 0.05;
+public int movementSize = 1, 2.5, 5;
+public double p = 0.8;
+public double threshold = 0.1;
 public int mate_count = 0;
 public boolean charts = false;
-public double alpha_a = 2.0;
-public double alpha_s = 2.0;
-public double beta_a = 2.0;
-public double beta_s = 2.0;
+public double alpha_a = 1.0;
+public double alpha_s = 1.0;
+public double beta_a = 1.0;
+public double beta_s = 1.0;
 public String nameSpace = "SPARSE";
 public int gridWidth = 100;
 public int gridHeight = 100;
 public boolean paramSweeps = true;
-public long simLength = 101;
-public int simNumber = 2;
+public long simLength = 1001;
+public int simNumber = 10;
 public String fileDataName = "results.txt";
 public String folderDataName = "data";
-public int dataSamplingInterval = 5;
+public int dataSamplingInterval = 1;
 public int burnIn = 0;
 public double scheduleTimeInterval = 1.0;
 public boolean closeProgramAtend = true;

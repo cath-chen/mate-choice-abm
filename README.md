@@ -51,4 +51,5 @@ In simulations where attraction is the main mating rule, familiarity is gained m
 
 ### Contributors
 Catherine Chen, Sydney Gonzales, Elina Moreno, Carson Chiem, Isaac Craig, Sydney Wood
+
 PSC 120 Winter 2024

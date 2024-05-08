@@ -20,7 +20,7 @@ The similarity rule is based on the attraction values of each agent. In the simu
 ### Familiarity
 When familiarity is run in the simulation, familiarity is added to the preference threshold, widening the range of acceptance for each agent. When agents reject each other for either rule, they will gain familiarity. As agents interact with each other over and over again, their familiarity score will increase, making it easier for the agents to accept each other, no matter the attraction or familiarity score. 
 
-![Decision diagram drawio](https://github.com/cath-chen/mate-choice-abm/assets/97262773/dfc2206d-f2f6-4387-ab51-1ec4e3c6be02)
+![Decision diagram](https://github.com/cath-chen/mate-choice-abm/assets/97262773/0fb73edd-d734-4847-b8fb-c49d93c1fec5)
 
 ## Simulation
 Our simulations are written in Java and run in Eclipse. It uses the Mason and Mason9 simulation toolkits to run the simulations. It uses the `script.txt` file to set parameters for experiments. Parameters can be sweeped, which means each parameter can be run with multiple values and a combination of all the parameters with different values will be run. A maximum of 3 parameters can be run at a time.

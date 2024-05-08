@@ -4,6 +4,7 @@
 Agent-based models (ABMs) use code to simulate rules and interactions between individuals to understand the emergent behaviors of a population. Familiarity is a critical component of attraction, along with similarity and proximity (Reis et al., 2011). Previous ABM studies have shown that attraction yields greater mated pair numbers than similarity, but those studies do not include familiarity as a viable mating strategy. We aim to bridge the gap in the literature by highlighting familiarity as a rule of attraction among diverse sexual orientations.
 
 **Research Question:** How does familiarity influence mate search with an attraction rule compared to similarity in attractiveness?
+
 **Hypothesis:** Familiarity levels will increase towards the end of the simulation regardless of mating strategy.
 
 ## Methods

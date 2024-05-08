@@ -9,7 +9,7 @@ Agent-based models (ABMs) use code to simulate rules and interactions between in
 ## Methods
 Agents are assigned a gender, a sexuality (lesbian, gay, bisexual, and straight), and an attractiveness score between 0 and 1 based on some beta distribution (either uniform or approximately normal). All agents are then spawned into a nxn grid. The grid is sectioned off into neighborhoods which determine initial familiarity scores between agents placed in the same starting neighborhood. Agents will move around randomly in the space until they encounter another agent, where they will then check compatibility, interact, and decide whether or not to reject or accept the opposing agent. If agents decide to pair up, they will be removed from the simulation. The simulation will end once all agents are removed from the simulation or once the simulation reaches the max number of step counts. A single simulation will assess either similarity or attraction rule. 
 
-![abm process diagram (1)](https://github.com/cath-chen/mate-choice-abm/assets/97262773/c868000a-5201-44e3-8ca2-0505db11904e)
+![abm process diagram (1)](https://github.com/cath-chen/mate-choice-abm/assets/97262773/c868000a-5201-44e3-8ca2-0505db11904e | width=100)
 
 ### Atraction Rule
 According to the attraction rule, agents will try to pair with agents with high attraction levels. A successful match happens when both agents are above each others threshold values. If any of the agents do not meet the other agent's threshold, they will be rejected. The rejected agent's preference threshold will get slightly bigger by 0.001, allowing more tolerance to less attractive mates in future steps. 

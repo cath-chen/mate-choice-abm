@@ -43,9 +43,7 @@ Our simulations are written in Java and run in Eclipse. It uses the Mason and Ma
 - `beta_s` - beta value in beta distribution for similarity distribution
 - `simLength` - simulation length
 - `simNumber` - number of simulations per parameter sweep
-
-### Experiments and Parameters Sweeped 
-[to be written]
+  
 
 ## Results
 In simulations where attraction is the main mating rule, familiarity is gained much faster and has a greater impact on the decision of mate choice, as all attraction simulations end with nearly 3x as much familiarity as similarity trials. Where similarity is considered, familiarity levels are low and remain constant over time, regardless of distribution. This indicates that familiarity is not important when dealing with similarity mating strategies. Normal distribution leads to greater differences in attraction values between mated pairs in the beginning of the simulation. Differences in attraction are quickly narrowed when the distribution is normal but remain consistent over time when the distribution is uniform.
